@@ -33,18 +33,10 @@ func goodbye(name string) {
 	fmt.Println("Goodbye,", name, "! Have a great day!")
 	fmt.Println("This is the end of the program.")}
 func main() {
-	// print welcome message
-	welcomeApp()
-	// get user name as input
+    welcomeApp()
 	name := getUserName()
-	// greet the user
-	// take the 2 numbers as input
 	num1, num2 := getTwoNumbers()
-	// sum the two numbers
 	sum:=add(num1, num2)
-	// display the result
 	display(name, sum)
-	// thank the user
 	goodbye(name)
-
- }
+  }
