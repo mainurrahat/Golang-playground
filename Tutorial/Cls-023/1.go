@@ -275,3 +275,226 @@ First-order function = add() (শুধু value নেয়, value ফেরত �
 Higher-order function (takes function as arg) = apply(square, 5)
 
 Higher-order function (returns function) = multiplier(2) → return করলো একটা নতুন function
+🔹 Callback Function কী?
+
+👉 Callback function হলো এমন একটা ফাংশন যেটাকে অন্য ফাংশনের argument হিসেবে পাঠানো হয়, আর সেই ফাংশন ভেতরে গিয়ে কল করে।
+
+অর্থাৎ একটা ফাংশনের কাজ শেষ হলে অন্য একটা ফাংশনকে কল করা হয় → সেইটাকে Callback বলে।
+
+🔹 Go তে Example:
+package main
+
+import "fmt"
+
+// callback function type define
+func processData(x int, callback func(int)) {
+    fmt.Println("Processing data:", x)
+    callback(x) // এখানে callback ফাংশন কল হচ্ছে
+}
+
+// একটা callback ফাংশন
+func printSquare(n int) {
+    fmt.Println("Square:", n*n)
+}
+
+func main() {
+    // এখানে printSquare ফাংশনকে callback হিসেবে পাঠালাম
+    processData(5, printSquare)
+}
+
+🔹 Output:
+Processing data: 5
+Square: 25
+
+🔹 Anonymous function দিয়েও callback করা যায়:
+package main
+
+import "fmt"
+
+func processData(x int, callback func(int)) {
+    fmt.Println("Processing data:", x)
+    callback(x)
+}
+
+func main() {
+    processData(7, func(n int) {
+        fmt.Println("Cube:", n*n*n)
+    })
+}
+
+
+Output:
+
+Processing data: 7
+Cube: 343
+
+
+✅ Summary:
+
+Callback হলো function যেটা অন্য function এ পাঠানো হয়।
+
+Higher Order Function callback গ্রহণ করতে পারে।
+
+Go তে আমরা সাধারণত callback ব্যবহার করি event, goroutine, channel handling, data processing ইত্যাদিতে।
+/*
+1.parameter vs argument
+2.first order function 
+i.standard function or named function
+ii.anonymous function or unnamed function
+iii.IIFE (Immediately Invoked Function Expression)
+iv.function expression
+3.higher order function
+4.callback function
+5.first class citizen=>variable assign data
+*/
+📌 Short Notes with Code
+1. Parameter vs Argument
+
+Parameter → Function er input variable (placeholder).
+
+Argument → Function call er somoy je real value pass kori.
+
+package main
+import "fmt"
+
+func greet(name string) { // name = parameter
+    fmt.Println("Hello,", name)
+}
+
+func main() {
+    greet("Rahat") // "Rahat" = argument
+}
+Output:
+
+Hello, Rahat
+2. First Order Function
+(i) Standard Function / Named Function
+package main
+import "fmt"
+
+func add(a, b int) int { // Named function
+    return a + b
+}
+
+func main() {
+    fmt.Println("Sum:", add(3, 4))
+}
+Output:
+
+5
+(ii) Anonymous Function (Unnamed Function)
+package main
+import "fmt"
+
+func main() {
+    mul := func(a, b int) int { // anonymous function assigned to variable
+        return a * b
+    }
+    fmt.Println("Multiplication:", mul(5, 6))
+}
+Output:
+
+12
+
+(iii) IIFE (Immediately Invoked Function Expression)
+package main
+import "fmt"
+
+func main() {
+    result := func(x, y int) int { // declare + call immediately
+        return x - y
+    }(10, 3)
+    fmt.Println("IIFE Result:", result)
+}
+Output:
+
+24
+
+(iv) Function Expression
+package main
+import "fmt"
+
+func main() {
+    var divide func(int, int) int // declare function type
+    divide = func(a, b int) int {
+        return a / b
+    }
+    fmt.Println("Division:", divide(20, 5))
+}
+Output:
+12
+
+3. Higher Order Function
+
+👉 Function that takes another function as parameter or returns a function.
+
+package main
+import "fmt"
+
+func applyOperation(a, b int, op func(int, int) int) int {
+    return op(a, b)
+}
+
+func main() {
+    add := func(x, y int) int { return x + y }
+    mul := func(x, y int) int { return x * y }
+
+    fmt.Println("Add:", applyOperation(3, 4, add))
+    fmt.Println("Multiply:", applyOperation(3, 4, mul))
+}
+Output:
+7
+12
+
+4. Callback Function
+
+👉 Function ke onno function er parameter hisebe pathano, pore call kora.
+
+package main
+import "fmt"
+
+func processMessage(msg string, callback func(string)) {
+    fmt.Println("Processing:", msg)
+    callback(msg)
+}
+
+func main() {
+    processMessage("Go is awesome!", func(m string) {
+        fmt.Println("Callback received:", m)
+    })
+}
+Output:
+
+Processing: Go is awesome!
+Callback received: Go is awesome!
+
+
+5. First-Class Citizen (Function as Data)
+
+👉 Function ke variable e assign kora, argument hisebe pathano, ba return kora possible.
+
+package main
+import "fmt"
+
+func main() {
+    add := func(a, b int) int { return a + b } // function as data
+    operation := add
+    fmt.Println("Result:", operation(7, 8))
+}
+Output:
+
+Result: 15
+
+
+
+✅ Recap
+
+Parameter = placeholder variable, Argument = real value
+
+First Order Function → standard, anonymous, IIFE, function expression
+
+Higher Order Function → function ke input/output hishebe use kora
+
+Callback Function → ekta function ke onno function call er moddhe execute kora
+
+First Class Citizen → function ke variable, parameter, return value hisebe use kora
