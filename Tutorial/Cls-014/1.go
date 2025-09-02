@@ -10,9 +10,9 @@ func add(x int, y int)  {
 }
 func main() {
 	p:=30
-	q:=40
-	add(p, q)
+	q:=40 
+	add(p, q)  
 	add(a, b)
 	add(a, p)
 }
-// scope jinis ta ki?
+// scope jinis ta ki?  
